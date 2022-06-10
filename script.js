@@ -14,20 +14,38 @@ const coverFile = document.querySelector("#file");
 
 
 
-function Book(id, title, author, pages, cover, read){
-    this.id = id;
-    this.title = title;
-    this.author = author;
-    this.pages = pages + " pages";
-    this.cover = cover;
-    this.read = read;
-}
+// function Book(id, title, author, pages, cover, read){
+//     this.id = id;
+//     this.title = title;
+//     this.author = author;
+//     this.pages = pages + " pages";
+//     this.cover = cover;
+//     this.read = read;
+// }
 
-Book.prototype.changeStatus = function(){
-    if(this.read){
-        this.read = false;
+// Book.prototype.changeStatus = function(){
+//     if(this.read){
+//         this.read = false;
+//     }
+//     else{this.read = true};
+// }
+
+class Book {
+    constructor(id, title, author, pages, cover, read){
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.pages = pages + " pages";
+        this.cover = cover;
+        this.read = read;
     }
-    else{this.read = true};
+
+     changeStatus() {
+        if(this.read){
+            this.read = false;
+        }
+        else{this.read = true;}
+    }
 }
 
 function addBookToLibrary(book){
@@ -122,15 +140,15 @@ function displayLibrary(library){
 
 }
 
-const testBook = new Book(0, "Test Title", "Test Author", 300, "./images/Koala.jpg", false);
-testBook.prototype = Object.create(Book.prototype);
-myLibrary.push(testBook);
-// console.log(myLibrary);
-myLibrary.forEach(function(book) {
-    for (prop in book){
-        // console.log(book[prop]);
-    }
-})
+// const testBook = new Book(0, "Test Title", "Test Author", 300, "./images/Koala.jpg", false);
+// testBook.prototype = Object.create(Book.prototype);
+// myLibrary.push(testBook);
+// // console.log(myLibrary);
+// myLibrary.forEach(function(book) {
+//     for (prop in book){
+//         // console.log(book[prop]);
+//     }
+// })
 
 displayLibrary(myLibrary);
 
