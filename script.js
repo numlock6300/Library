@@ -10,6 +10,8 @@ const inputAuthor = document.querySelector("#author");
 const inputPages = document.querySelector("#pages");
 const addButton = document.querySelector(".submit-button");
 const coverFile = document.querySelector("#file");
+const form = document.querySelector(".add-book-form");
+
 // console.dir(coverFile);
 
 // function Book(id, title, author, pages, cover, read){
@@ -173,22 +175,69 @@ showFormButton.addEventListener(
   false
 );
 
-addButton.addEventListener("click", () => {
-  let id = myLibrary.length;
-  let title = inputTitle.value;
-  let author = inputAuthor.value;
-  let pages = inputPages.value;
-  let bookCover = "";
-  console.log(coverFile.files[0]);
-  if (coverFile.files[0]) {
-    bookCover = "./images/" + coverFile.files[0].name;
+// addButton.addEventListener("click", () => {
+//   let id = myLibrary.length;
+//   let title = inputTitle.value;
+//   let author = inputAuthor.value;
+//   let pages = inputPages.value;
+//   let bookCover = "";
+//   console.log(coverFile.files[0]);
+//   if (coverFile.files[0]) {
+//     bookCover = "./images/" + coverFile.files[0].name;
+//   }
+//   let book = new Book(id, title, author, pages, bookCover, false);
+//   book.prototype = Object.create(Book.prototype);
+//   addBookToLibrary(book);
+//   displayLibrary(myLibrary);
+//   mainContainer.classList.remove("blur-body");
+//   //formContainer.classList.add("hiden-form");
+//   console.log("click");
+//   // console.dir(coverFile.files[0].name);
+// });
+
+form.addEventListener("submit", (e) => {
+  if (inputTitle.validity.valid) {
+    console.log("There is a title");
+    let id = myLibrary.length;
+    let title = inputTitle.value;
+    let author = inputAuthor.value;
+    let pages = inputPages.value;
+    let bookCover = "";
+    console.log(coverFile.files[0]);
+    if (coverFile.files[0]) {
+      bookCover = "./images/" + coverFile.files[0].name;
+    }
+    let book = new Book(id, title, author, pages, bookCover, false);
+    book.prototype = Object.create(Book.prototype);
+    addBookToLibrary(book);
+    displayLibrary(myLibrary);
+    mainContainer.classList.remove("blur-body");
+    formContainer.classList.add("hiden-form");
+    console.log("click");
+    // console.dir(coverFile.files[0].name);
+    inputTitle.setCustomValidity("");
+    e.preventDefault();
+  } else {
+    console.log("Empty");
+    showError();
+    e.preventDefault();
   }
-  let book = new Book(id, title, author, pages, bookCover, false);
-  book.prototype = Object.create(Book.prototype);
-  addBookToLibrary(book);
-  displayLibrary(myLibrary);
-  mainContainer.classList.remove("blur-body");
-  formContainer.classList.add("hiden-form");
-  console.log("click");
-  // console.dir(coverFile.files[0].name);
+});
+
+addButton.addEventListener("click", () => {
+  if (inputTitle.validity.valueMissing) {
+    inputTitle.setCustomValidity("You need to enter a title for the book.");
+  } else {
+    inputTitle.setCustomValidity("");
+  }
+  if (inputAuthor.validity.valueMissing) {
+    inputAuthor.setCustomValidity("You need to enter a name of the author.");
+  } else {
+    inputAuthor.setCustomValidity("");
+  }
+  if (inputPages.validity.valueMissing) {
+    inputPages.setCustomValidity("You need to enter the number of pages");
+  } else {
+    inputPages.setCustomValidity("");
+  }
 });
